@@ -4,31 +4,74 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DOS PLATS · Menú del día</title>
-  <meta name="description" content="Restaurante DOS PLATS · Menú del día actualizado." />
+  <meta name="description" content="Restaurante DOS PLATS · Menú del día actualizado. Cocina casera con producto local en Lleida." />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#0f766e; --brand-2:#115e59; --ink:#0f172a; --ink-2:#334155; --bg:#fafafa; --card:#ffffff; --radius:18px; --shadow:0 10px 30px rgba(2,6,23,.08);
+      --brand:#12b886;            /* verde fresco */
+      --brand-2:#0c8f66;          /* verde oscuro */
+      --ink:#0f172a;              /* texto */
+      --ink-2:#cbd5e1;            /* texto sobre oscuro */
+      --bg:#0b0f14;               /* fondo body */
+      --glass:#0b0f14cc;          /* vidrio */
+      --card:#0f172a;             /* tarjetas oscuras */
+      --muted:#94a3b8;            
+      --radius:18px;--shadow:0 20px 60px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
-    .container{width:min(980px, 100%);margin-inline:auto;padding:24px}
-    header{position:sticky;top:0;z-index:50;background:rgba(250,250,250,.8);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid #eee}
+    html,body{margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink-2);background:var(--bg);}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(1100px, 100%);margin-inline:auto;padding:24px}
+
+    /* ====== Header ====== */
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(11,15,20,.85), rgba(11,15,20,.4));backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid rgba(148,163,184,.15)}
     .nav{display:flex;align-items:center;gap:18px;justify-content:space-between}
-    .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px}
-    .logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;color:white;font-weight:800}
-    .hero{padding:34px 0}
-    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0}
-    .hero p{color:var(--ink-2);margin:.8rem 0 0}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .card.pad{padding:20px}
-    .menu{padding:28px 0}
-    .menu h2{margin:0 0 10px;font-size:clamp(22px,3.2vw,32px)}
-    .menu .muted{color:var(--ink-2)}
-    .menu-frame{width:100%;height:82vh;min-height:520px;border:none;border-radius:14px;background:#f1f5f9}
-    footer{padding:28px 0;background:#0b1416;color:#e2e8f0;margin-top:28px}
-    .small{font-size:.9rem}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo-mark{width:40px;height:40px;border-radius:12px;background:radial-gradient(120px 80px at 10% 10%, #1dd1a1, transparent 60%),linear-gradient(135deg,var(--brand-2),#0ea5e9);display:grid;place-items:center;color:white;font-weight:800}
+    .brand{font-family:'Playfair Display',serif;font-weight:800;letter-spacing:.4px;color:white}
+    .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(148,163,184,.2);color:#e2e8f0;padding:.5rem .8rem;border-radius:999px;background:rgba(255,255,255,.03)}
+
+    /* ====== Hero ====== */
+    .hero{position:relative;min-height:68vh;isolation:isolate;display:grid;align-items:center}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(closest-side at 10% 20%, rgba(18,184,134,.35), transparent 60%),radial-gradient(closest-side at 90% 10%, rgba(14,165,233,.25), transparent 60%),linear-gradient(180deg,#0b0f14 10%, #0b0f14cc 60%, #0b0f1400 100%)}
+    .hero::after{content:"";position:absolute;inset:-20vh 0 0 0;background:url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;opacity:.22;mix-blend:screen;z-index:-1}
+    .hero h1{font-family:'Playfair Display',serif;color:#fff;font-weight:800;font-size:clamp(34px,6vw,60px);line-height:1.02;margin:0}
+    .hero p{color:#dbeafe;max-width:62ch;margin:.9rem 0 1.4rem}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.2rem;border-radius:12px;border:1px solid rgba(255,255,255,.1);font-weight:600;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),#22d3ee);color:#082f49;box-shadow:0 10px 30px rgba(34,211,238,.25)}
+    .btn-outline{background:rgba(255,255,255,.05);color:#e2e8f0}
+
+    /* ====== Section shells ====== */
+    .section{padding:42px 0}
+    .title{font-family:'Playfair Display',serif;color:white;font-weight:800;margin:0 0 8px;font-size:clamp(24px,3.5vw,36px)}
+    .muted{color:var(--muted)}
+
+    /* ====== PDF Menú ====== */
+    .pdf-wrap{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.15);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:rgba(2,6,23,.35);backdrop-filter:blur(6px)}
+    .meta .date{color:#e2e8f0}
+    .actions{display:flex;gap:10px}
+    .menu-frame{width:100%;height:82vh;min-height:560px;border:0;background:#0b1220}
+
+    /* ====== Gallery ====== */
+    .grid{display:grid;gap:14px}
+    .grid.cols-auto{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+    .card{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(148,163,184,.14)}
+    .card img{width:100%;height:240px;object-fit:cover;display:block;filter:saturate(1.05)}
+    .badge{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.55);color:#f8fafc;padding:.3rem .6rem;border-radius:999px;font-size:.85rem;border:1px solid rgba(255,255,255,.2)}
+
+    /* ====== Map ====== */
+    .map-card{border-radius:16px;overflow:hidden;border:1px solid rgba(148,163,184,.14);background:rgba(255,255,255,.03);box-shadow:var(--shadow)}
+
+    /* ====== Footer ====== */
+    footer{padding:34px 0;border-top:1px solid rgba(148,163,184,.15);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.04))}
+    .footer-grid{display:grid;gap:16px}
+    @media (min-width: 900px){.footer-grid{grid-template-columns:2fr 1fr 1fr}}
+    .small{font-size:.92rem}
   </style>
 </head>
 <body>
@@ -36,78 +79,103 @@
     <div class="container nav">
       <div class="logo">
         <div class="logo-mark">DP</div>
-        <div>DOS PLATS</div>
+        <div class="brand">DOS PLATS</div>
       </div>
+      <div class="chip" aria-hidden="true">Menú del día · Lleida</div>
     </div>
   </header>
 
+  <section class="hero">
+    <div class="container">
+      <h1>Cocina casera con producto local</h1>
+      <p>Menú del día de lunes a sábado. Platos a la brasa, guisos y postres caseros. Ambiente cercano en el corazón de Pardinyes.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#menu">Ver menú de hoy</a>
+        <a class="btn btn-outline" href="#ubicacion">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
   <main>
-    <section class="hero">
+    <!-- MENÚ DEL DÍA -->
+    <section id="menu" class="section">
       <div class="container">
-        <h1>Menú del día</h1>
-        <p class="muted">Consulta aquí el menú vigente. Actualizado por el restaurante.</p>
-      </div>
-    </section>
+        <h2 class="title">Menú del día</h2>
+        <p class="muted" style="margin-top:0">Actualizamos el PDF a diario. Consulta aquí el último menú.</p>
 
-    <section class="menu">
-      <div class="container">
-        <div class="card pad" style="margin-bottom:12px">
-          <strong>Hoy:</strong>
-          <span id="today" class="muted"></span>
-        </div>
-        <iframe id="menuFrame" class="menu-frame" title="PDF del menú del día"></iframe>
-        <p class="small" style="margin-top:10px">
-          <a id="downloadLink" href="#" download>Descargar PDF</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- GALERÍA DE PLATOS -->
-    <section class="menu">
-      <div class="container">
-        <h2 style="margin:0 0 10px;font-size:clamp(22px,3.2vw,32px)">Algunos de nuestros platos</h2>
-        <p class="muted" style="margin:.2rem 0 1rem">Imágenes de muestra; podemos sustituirlas por fotos propias.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px">
-          <img alt="Plato 1" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1200&auto=format&fit=crop"/>
-          <img alt="Plato 2" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=1200&auto=format&fit=crop"/>
-          <img alt="Plato 3" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=1200&auto=format&fit=crop"/>
-          <img alt="Plato 4" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1200&auto=format&fit=crop"/>
-          <img alt="Plato 5" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1200&auto=format&fit=crop"/>
-          <img alt="Plato 6" loading="lazy" style="width:100%;height:220px;object-fit:cover;border-radius:14px" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop"/>
+        <div class="pdf-wrap">
+          <div class="meta">
+            <div class="date"><strong>Hoy:</strong> <span id="today"></span></div>
+            <div class="actions">
+              <a id="downloadLink" class="btn btn-outline" href="#" download>Descargar PDF</a>
+            </div>
+          </div>
+          <iframe id="menuFrame" class="menu-frame" title="PDF del menú del día"></iframe>
         </div>
       </div>
     </section>
 
-    <!-- MAPA / CÓMO LLEGAR -->
-    <section class="menu">
+    <!-- GALERÍA -->
+    <section class="section">
       <div class="container">
-        <h2 style="margin:0 0 10px;font-size:clamp(22px,3.2vw,32px)">Dónde estamos</h2>
-        <p class="muted" style="margin:.2rem 0 1rem">Carrer de Tarragona, 43, 25005 Lleida</p>
-        <div class="card" style="overflow:hidden">
-          <iframe title="Mapa DOS PLATS" width="100%" height="420" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.703658040563!2d0.6359712!3d41.6257757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a6e058d282823f%3A0xe2faaa4e6dd5328!2sBar%20Restaurante%20Dos%20Plats!5e0!3m2!1ses!2es!4v1731958800000!5m2!1ses!2es"></iframe>
+        <h2 class="title">Un vistazo a nuestros platos</h2>
+        <div class="grid cols-auto">
+          <figure class="card"><img alt="Brasa" loading="lazy" src="https://images.unsplash.com/photo-1526318472351-c75fcf070305?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">A la brasa</figcaption></figure>
+          <figure class="card"><img alt="Arroz" loading="lazy" src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">Arroces</figcaption></figure>
+          <figure class="card"><img alt="Ensalada" loading="lazy" src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">De temporada</figcaption></figure>
+          <figure class="card"><img alt="Postre" loading="lazy" src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">Postres</figcaption></figure>
+          <figure class="card"><img alt="Pescado" loading="lazy" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">Pescado</figcaption></figure>
+          <figure class="card"><img alt="Pasta" loading="lazy" src="https://images.unsplash.com/photo-1525755662778-989d0524087e?q=80&w=1400&auto=format&fit=crop"><figcaption class="badge">Pasta</figcaption></figure>
         </div>
-        <p class="small" style="margin-top:10px">
-          <a class="" href="https://www.google.com/maps/place/Bar+Restaurante+Dos+Plats/@41.6252821,0.635769,19.54z/data=!3m1!5s0x12a6e05914ce6137:0x6e3aceba35d879e3!4m15!1m8!3m7!1s0x12a6e0593de9846d:0x3e077737029d7be6!2sCarrer+de+Tarragona,+43,+25005+Lleida,+Espa%C3%B1a!3b1!8m2!3d41.6255523!4d0.636166!16s%2Fg%2F11xt0410dp!3m5!1s0x12a6e058d282823f:0xe2faaa4e6dd5328!8m2!3d41.6257757!4d0.6359712!16s%2Fg%2F11c2j2q7pv?hl=es&entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Abrir en Google Maps</a>
-        </p>
+      </div>
+    </section>
+
+    <!-- MAPA -->
+    <section id="ubicacion" class="section">
+      <div class="container">
+        <h2 class="title">Dónde estamos</h2>
+        <p class="muted">Carrer de Tarragona, 43, 25005 Lleida</p>
+        <div class="map-card">
+          <iframe title="Mapa DOS PLATS" width="100%" height="460" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2992.703658040563!2d0.6359712!3d41.6257757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a6e058d282823f%3A0xe2faaa4e6dd5328!2sBar%20Restaurante%20Dos%20Plats!5e0!3m2!1ses!2es!4v1731958800000!5m2!1ses!2es"></iframe>
+        </div>
+        <p class="small" style="margin-top:10px"><a href="https://www.google.com/maps/place/Bar+Restaurante+Dos+Plats/@41.6252821,0.635769,19.54z/data=!3m1!5s0x12a6e05914ce6137:0x6e3aceba35d879e3!4m15!1m8!3m7!1s0x12a6e0593de9846d:0x3e077737029d7be6!2sCarrer+de+Tarragona,+43,+25005+Lleida,+Espa%C3%B1a!3b1!8m2!3d41.6255523!4d0.636166!16s%2Fg%2F11xt0410dp!3m5!1s0x12a6e058d282823f:0xe2faaa4e6dd5328!8m2!3d41.6257757!4d0.6359712!16s%2Fg%2F11c2j2q7pv?hl=es&entry=ttu&g_ep=EgoyMDI1MTExMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Abrir en Google Maps</a></p>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <p class="small">© <span id="year"></span> DOS PLATS · Menú del día</p>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:8px">
+          <div class="logo-mark">DP</div>
+          <div class="brand">DOS PLATS</div>
+        </div>
+        <p class="small">© <span id="year"></span> DOS PLATS · Menú del día</p>
+      </div>
+      <div>
+        <strong class="small" style="color:#e2e8f0">Horario</strong>
+        <p class="small muted">Mar–Vie 7:30–15:30 · Sáb 8:30–15:30 · Dom 9:30–15:30 · Lun cerrado</p>
+      </div>
+      <div>
+        <strong class="small" style="color:#e2e8f0">Contacto</strong>
+        <p class="small muted">Carrer de Tarragona, 43, Lleida<br>+34 973 19 29 87</p>
+      </div>
     </div>
   </footer>
 
   <script>
-    const MENU_PDF_URL = "menu/menu-hoy.pdf"; // ruta relativa para GitHub Pages
+    // Config PDF (ruta relativa para GitHub Pages)
+    const MENU_PDF_URL = "menu/menu-hoy.pdf";
+
+    // Fecha y año
     const d=new Date();
     document.getElementById('today').textContent = d.toLocaleDateString('es-ES', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
     document.getElementById('year').textContent = d.getFullYear();
+
+    // Carga PDF
     const frame = document.getElementById('menuFrame');
     const dl = document.getElementById('downloadLink');
-    frame.src = MENU_PDF_URL;
-    dl.href = MENU_PDF_URL;
+    frame.src = MENU_PDF_URL; dl.href = MENU_PDF_URL;
   </script>
 </body>
 </html>
