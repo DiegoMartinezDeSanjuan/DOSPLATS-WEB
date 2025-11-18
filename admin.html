@@ -5,15 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin · DOS PLATS</title>
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b0f14;color:#e2e8f0;margin:0}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:#0b0f14;color:#e2e8f0;margin:0
+    }
     .wrap{width:min(720px,100%);margin:40px auto;padding:20px}
     .card{background:#111827;border:1px solid #334155;border-radius:14px;padding:18px}
     h1{margin:0 0 10px}
     label{display:block;margin:.6rem 0 .2rem}
     input[type="email"],input[type="password"],input[type="file"]{
-      width:100%;padding:.8rem 1rem;border-radius:12px;border:1px solid #334155;background:#0b1220;color:#e2e8f0
+      width:100%;padding:.8rem 1rem;border-radius:12px;
+      border:1px solid #334155;background:#0b1220;color:#e2e8f0
     }
-    button{cursor:pointer;padding:.8rem 1.1rem;border-radius:12px;border:1px solid #334155;background:#12b886;color:#082f49;font-weight:700}
+    button{
+      cursor:pointer;padding:.8rem 1.1rem;border-radius:12px;
+      border:1px solid #334155;background:#12b886;color:#082f49;font-weight:700
+    }
     .row{display:flex;gap:10px;align-items:center}
     .muted{color:#94a3b8}
     .ok{color:#22c55e}
@@ -24,7 +31,7 @@
 <body>
   <div class="wrap">
     <h1>Admin · DOS PLATS</h1>
-    <p class="muted">Inicia sesión para subir el <strong>menú-hoy.pdf</strong>.</p>
+    <p class="muted">Inicia sesión para subir el <strong>menú del día (PDF)</strong>.</p>
 
     <div class="card" id="loginCard">
       <label>Email</label>
@@ -47,7 +54,7 @@
         <button onclick="upload()">Subir y publicar</button>
         <button onclick="logout()" style="background:#0ea5e9;color:#0b1220">Salir</button>
       </div>
-      <p class="muted">Se subirá a: <code>menu/dosplats/menu-hoy.pdf</code></p>
+      <p class="muted">El archivo se subirá a: <code>menu/dosplats/menu-hoy.pdf</code></p>
       <p id="uploadMsg" class="muted"></p>
       <p>URL pública actual: <a id="publicUrl" href="#" target="_blank" rel="noopener"></a></p>
     </div>
@@ -56,24 +63,25 @@
   <!-- Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script>
-    // 1) Pega aquí tus claves de Supabase
+    // === CONFIGURACIÓN DE SUPABASE ===
     const SUPABASE_URL = "https://lfcsngxnvtpxfgloajsa.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmY3NuZ3hudnRweGZnbG9hanNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM0ODU5NTgsImV4cCI6MjA3OTA2MTk1OH0.RW2c99AxFqyd1Df85CHDqQF6NCB7_8JKSSi2jRb_aBg";
-
     const BUCKET = "menu";
     const OBJECT_PATH = "dosplats/menu-hoy.pdf";
     const PUBLIC_URL = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${OBJECT_PATH}`;
-
     const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // === ELEMENTOS DEL DOM ===
     const loginCard = document.getElementById('loginCard');
     const uploadCard = document.getElementById('uploadCard');
     const loginMsg = document.getElementById('loginMsg');
     const uploadMsg = document.getElementById('uploadMsg');
     const who = document.getElementById('who');
     const publicUrlA = document.getElementById('publicUrl');
-    publicUrlA.textContent = PUBLIC_URL; publicUrlA.href = PUBLIC_URL;
+    publicUrlA.textContent = PUBLIC_URL; 
+    publicUrlA.href = PUBLIC_URL;
 
+    // === LOGIN ===
     async function login(){
       loginMsg.textContent = "Accediendo...";
       const email = document.getElementById('email').value.trim();
@@ -86,6 +94,7 @@
       uploadCard.style.display = 'block';
     }
 
+    // === LOGOUT ===
     async function logout(){
       await client.auth.signOut();
       uploadCard.style.display = 'none';
@@ -94,16 +103,38 @@
       uploadMsg.textContent = "";
     }
 
+    // === SUBIDA DEL PDF ===
     async function upload(){
-      const f = document.getElementById('file').files[0];
+      const input = document.getElementById('file');
+      const f = input.files[0];
       if(!f){ uploadMsg.textContent = "❌ Selecciona un PDF"; return; }
-      if(f.type !== "application/pdf"){ uploadMsg.textContent = "❌ Debe ser PDF"; return; }
+      if(f.type !== "application/pdf"){ uploadMsg.textContent = "❌ Debe ser un archivo PDF"; return; }
+      if(f.size > 10 * 1024 * 1024){ uploadMsg.textContent = "❌ El PDF supera 10 MB"; return; }
 
       uploadMsg.textContent = "Subiendo...";
-      // sube con 'upsert: true' para sobrescribir
-      const { error } = await client.storage.from(BUCKET).upload(OBJECT_PATH, f, { upsert: true, contentType: "application/pdf", cacheControl: "no-cache" });
-      if(error){ uploadMsg.textContent = "❌ " + error.message; return; }
-      uploadMsg.textContent = "✅ Menú actualizado. Comprueba la web pública.";
+      try {
+        // 🔄 Renombrar siempre a menu-hoy.pdf antes de subir
+        const renamed = new File([f], "menu-hoy.pdf", { type: "application/pdf" });
+
+        const { error } = await client.storage
+          .from(BUCKET)
+          .upload(OBJECT_PATH, renamed, {
+            upsert: true,
+            contentType: "application/pdf",
+            cacheControl: "no-cache"
+          });
+
+        if(error){ uploadMsg.textContent = "❌ " + error.message; return; }
+
+        uploadMsg.textContent = "✅ Menú actualizado correctamente. Comprueba la web pública.";
+        // Actualizar enlace para evitar caché
+        publicUrlA.href = PUBLIC_URL + "?t=" + Date.now();
+        publicUrlA.textContent = PUBLIC_URL;
+      } catch (e) {
+        uploadMsg.textContent = "❌ " + (e.message || e);
+      } finally {
+        input.value = ""; // Limpia el selector
+      }
     }
   </script>
 </body>
